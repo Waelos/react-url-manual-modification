@@ -9,22 +9,34 @@ import Athletes from "./get/Athletes";
 import AthleteSessions from "./get/AthleteSessions";
 import AthleteTrainingSession from "./get/AthleteTrainingSession";
 
+export const paths = {
+  Athletes: "/Athletes",
+  AthleteSessions: "/Athletes/:id/AthleteSessions",
+  AthleteTrainingSession:
+    "/Athletes/:athleteId/AthleteSessions/:athleteSessionId/TrainingSession",
+};
+
+export const makePaths = {
+  AthleteSessions: (id) => {
+    return `/Athletes/${id}/AthleteSessions`;
+  },
+  AthleteTrainingSession: (athleteId, athleteSessionId) => {
+    return `/Athletes/${athleteId}/AthleteSessions/${athleteSessionId}/TrainingSession`;
+  },
+};
+
 function App() {
   return (
     <div className="container-fluid">
       <ToastContainer autoClose={3000} hideProgressBar />
       <Header />
       <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/Athletes" exact component={Athletes} />
+        <Route exact path="/" component={Home} />
+        <Route exact path={paths.Athletes} component={Athletes} />
+        <Route exact path={paths.AthleteSessions} component={AthleteSessions} />
         <Route
-          path="/Athletes/:id/AthleteSessions"
           exact
-          component={AthleteSessions}
-        />
-        <Route
-          path="/Athletes/:athleteId/AthleteSessions/:athleteSessionId/TrainingSession"
-          exact
+          path={paths.AthleteTrainingSession}
           component={AthleteTrainingSession}
         />
       </Switch>
